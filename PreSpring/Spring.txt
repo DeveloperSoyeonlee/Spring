@@ -1,5 +1,7 @@
 Spring Framework
 
+깃연결 성공하자
+
  4버전    ->  5버전
  xml 파일 -> java파일
 
