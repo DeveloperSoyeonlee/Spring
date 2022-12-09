@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!-- 외부(스프링)  -->
+	<!-- 객체  new Object(); -->
+	<bean id="messageBean" 
+	      class="com.itwillbs.spring3.MessageBeanKr" />
+	      
+	<bean id="p"
+	      class="com.itwillbs.spring4.PersonImpl" >
+	      <!-- 객체의 set메서드 호출 -->
+	      <property name="name" value="아이티윌" />
+	      <property name="age">
+	      		<value>33</value>
+	      </property>
+	</bean>     
+	
+	<bean id="p2" 
+	      class="com.itwillbs.spring4.PersonImpl">
+	      <constructor-arg>
+	         <value>학생2</value>
+	      </constructor-arg>
+	      
+	</bean>
+
+
+</beans>
+
