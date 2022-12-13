@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.itwillbs.web">
+	<logger name="com.itwillbs.controller">
 		<level value="debug" />
 	</logger>
 	
