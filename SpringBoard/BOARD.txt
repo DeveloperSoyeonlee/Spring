@@ -1,0 +1,90 @@
+BOARD.txt
+
+CREATE TABLE `springdb`.`tbl_board` (
+  `bno` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NOT NULL,
+  `content` TEXT NULL,
+  `writer` VARCHAR(45) NOT NULL,
+  `regdate` TIMESTAMP NOT NULL DEFAULT now(),
+  `viewcnt` INT NULL DEFAULT 0,
+  PRIMARY KEY (`bno`));
+
+  
+  
+  * 의존 객체 주입
+ 
+  @Inject 
+  	: Java 에서 지원하는 어노테이션 ( = 특정 프레임워크에 종속적이지 않음 = 스프링에서만 사용할 수 있는게 아니다)
+ 	 
+ 	 - Q ) 똑같은 객체 이름이 있다면 어떻게 구별해서 가져오는가 ?????
+ 	   A ) 해당 객체를 찾는 순서
+ 	 	 [ 타입 -> @Qualifier -> 이름 -> 실패 ]
+ 	 	 
+ 	 - @Autowired 와 동일한 동작 수행 But 찾는 순서가 다름
+ 	 - 빌드도구 (Maven/Gradle)를 통해서 라이브러리 추가가 필요함 (= JUnit 버전12로 올린 이유)
+ 	 
+ 	 - 사용가능 위치 : 멤버변수, setter(), 생성자, 일반메서드에서 사용가능
+ 	 	 
+ -----------------------------------------------------------------------------------------------------------
+  
+  @Autowired
+  	: Spring에서 지원하는 어노테이션 
+  	
+  	- 해당 객체를 찾는 순서
+  		[ 타입 -> 이름 -> @Qualifier -> 실패 ]
+  		
+  	- 프레임워크에 종속되는 상황이다보니까 조금 더 까다롭다
+  	- <context:annotation-config/> 라는 xml 설정값 필요 
+  		-> Q ) root,sevelet-context,web.xml 에도 없다 근데 왜 쓸 수 있냐 ? 
+  		   A ) 스프링의 기본 설정값이므로
+  	
+  	- 사용가능 위치 : 멤버변수, setter(), 생성자, 일반메서드에서 사용가능 
+  
+ -----------------------------------------------------------------------------------------------------------
+  	
+  @Resource
+  	: Java 에서 지원하는 어노테이션
+  	
+  	- 해당 객체를 찾는 순서
+		[ 이름 -> 타입 -> @Qualifier -> 실패 ]
+  	
+  	- <context:annotation-config/> 라는 xml 설정값 필요 
+	- 사용가능 위치 : 멤버변수, setter()에서 사용가능 
+	- 스프링프레임워크에서 사용하기에 조금 제한적임
+  
+ -----------------------------------------------------------------------------------------------------------
+  
+  * @Qualifier 란 무엇인가?
+  	
+  	- 타입이 동일한 객체(bean)가 여러개 있는 경우 => 스프링컨테이너 초기화 => Exception
+  													(확실하게 정보받고있는게 맞는가..?하니까 내부적으로 초기화한번 함)
+  	 (@Autowired 동일한 타입에 여러곳 사용)
+  	 
+  	- 문제상황을 해결하기 위해서 객체의 이름을 지정
+	  		(1)
+		  		<context:annotation-config>
+		  			<bean id="객체명" class="객체주소">
+		  				<qulifier value="dao1"/>
+		  			</bean>
+		  		</context:annotation-config>
+		  		
+	  		(2) 
+			  	 @Inject @Qualifier("Bdao") => 이렇게 별명같은 것을 지정해준다
+			  	 private BoardDAO dao;
+		  	 
+  
+  
+  
+		 * 프로젝트를 함에있어서 체크해야할 부분
+		    - 공통주소 URL 를 어떻게 구분하여 정보를 불러올 것인가?
+		        - 기존은 멤버형태로 호출해서 할 수 있도록 했다.
+		    - 각 기능별 URI를 미리 체크해야한다 (어떻게 매핑할 것인지)
+		    - 각 URI별 호출방식(GET/POST)
+		    - 결과/페이지 출력
+		    - 예외처리
+		    - 서비스계층
+		    - DAO - SQL 준비
+  
+  
+  
+  
