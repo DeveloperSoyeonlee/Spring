@@ -76,6 +76,14 @@ param : ${param.result }
 		if (result == 'createOK'){
 			alert(" 글쓰기 완료! ")
 		}
+		
+		if (result == 'modOK') {
+			alert(" 글 수정 완료!")
+		}
+		
+		if (result == 'delOK') {
+			alert(" 글 삭제 완료!")
+		}
 	</script>	
 
 <%@ include file="../include/footer.jsp"%>

@@ -46,6 +46,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
+	
 	@Override
 	public List<BoardVO> getBoardListAll() throws Exception {
 		mylog.debug(" getBoardListAll() -> sqlSession-mapper 호출");
@@ -58,12 +59,46 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
+	
 	@Override
 	public void updateViewcnt(Integer bno) throws Exception {
 		mylog.debug(" updateViewcnt(Integer bno) -> sqlSession객체통해 정보처리");
 		
 		sqlSession.update(NAMESPACE + ".updateViewcnt", bno);
 	}
+
+
+	
+	@Override
+	public BoardVO getBoard(Integer bno) throws Exception {
+		mylog.debug(" getBoard(Integer bno) -> sqlSession-mapper 호출 ");
+		
+		BoardVO vo = sqlSession.selectOne(NAMESPACE + ".getBoard", bno);
+		return vo ;
+	}
+
+
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		mylog.debug(" updateBoard(BoardVO vo" );
+		return sqlSession.update(NAMESPACE+".updateBoard", vo);
+		
+	}
+
+
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		mylog.debug(" deleteBoard(BoardVO vo" );
+		sqlSession.delete(NAMESPACE+".deleteBoard",bno);
+	}
+
+
+	
+
+
+	
+	
+	
 	
 	
 	

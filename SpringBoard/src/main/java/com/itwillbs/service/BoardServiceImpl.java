@@ -46,7 +46,38 @@ public class BoardServiceImpl implements BoardService {
 		dao.updateViewcnt(bno);
 		
 	}
+
+
+	@Override
+	public BoardVO getBoard(Integer bno) throws Exception {
+		mylog.debug(" getBoard(Integer bno) 호출");
+		return dao.getBoard(bno);
+	}
+
+
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		mylog.debug("  updateBoard(BoardVO vo) 호출");
+		return dao.updateBoard(vo);
+	}
+
+
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		dao.deleteBoard(bno);
+	}
+
+
+
+
+
+
+
+
 	
+	
+
 	
 
 

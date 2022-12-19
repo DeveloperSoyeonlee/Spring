@@ -28,4 +28,31 @@
 		where bno = #{bno}
 	</update>
 
+
+	<!-- 글번호(bno) 글정보 모두 조회 -->
+	<select id="getBoard" resultType="com.itwillbs.domain.BoardVO">
+		select * from tbl_board where bno = #{bno}
+	</select>
+	
+	
+	<!-- 글 정보 수정하기 -->
+	<update id="updateBoard">
+		update tbl_board set title=#{title}, writer=#{writer}, content=#{content}
+		where bno = #{bno}
+	</update>
+	
+	
+	<!-- 글 정보 삭제하기 -->
+	<delete id="deleteBoard">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+	
 </mapper>
+
+
+
+
+
+
+
+

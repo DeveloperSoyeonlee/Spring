@@ -117,7 +117,7 @@ public class BoardController {
 	// @RequestParam   : request.getParameter() 동작 수행 (1:1 관계)
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public void readGET(@RequestParam("bno") int bno, HttpSession session) throws Exception{
+	public void readGET(Model model, @RequestParam("bno") int bno, HttpSession session) throws Exception{
 //	public void readGET(@ModelAttribute("bno") int bno) throws Exception{
 //	public void readGET(int bno) throws Exception{
 		
@@ -143,10 +143,83 @@ public class BoardController {
 		}
 		
 		//3. 서비스통해 -> DAO(디비)에서 특정 글번호에 해당하는 정보 가져오기
+		BoardVO vo = service.getBoard(bno);
 		
 		//4. 연결된 뷰 페이지로 정보 전달(model)
+		model.addAttribute("vo",vo);
+
+//		model.addAttribute("vo",service.getBoard(bno)); // 간결하게 적기위해 이렇게 코드 적으면된다
+//		model.addAttribute(service.getBoard(bno)); // 간결하게 적기위해 이렇게 코드 적으면된다
+		
+		
+			
+		}
+	/**
+	 * 수정
+	 */
+	
+	// 수정GET
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public void modifyGET(BoardVO vo,int bno, Model model) throws Exception {
+//	public void modifyGET(Model model, @RequestParam("bno") int bno) throws Exception {
+		
+		
+		// 1. 파라미터 저장(bno)
+		mylog.debug(" 전달정보(bno) 저장 : " + bno); 
+		
+		// 2. 서비스 - DAO(글 조회)
+		// 3. model 객체 사용 -> 원하는 페이지로 이동
+		model.addAttribute("vo", service.getBoard(bno));
+		// 4. /board/modify.jsp 페이지로 이동
 		
 	}
+	
+	
+	// 수정POST
+	@RequestMapping (value ="/modify", method=RequestMethod.POST)
+	public String modifyPOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		// 1. 전달된 정보(수정할 정보) 저장
+		mylog.debug(vo+"");
+		// 2. 서비스 - DAO : 정보 수정 메서드 호출
+		Integer result = service.updateBoard(vo);
+		
+		if(result > 0) {
+			// 3. "수정완료"라는 메세지정보 전달
+			rttr.addAttribute("result", "modOK");
+		}
+		
+		// 4. 페이지 이동 (/board/list)
+		
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	
+	/**
+	 * 글 삭제
+	 */
+	
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public String removePOST(int bno, RedirectAttributes rttr) throws Exception {
+		
+		// 1. 전달정보 저장(bno)
+		mylog.debug("전달정보 : " + bno + "");
+		// 2. 서비스-DAO 연결해서 : 게시판글 삭제 메서드 호출
+		service.deleteBoard(bno);
+		
+		
+		// 3. "삭제완료" 정보를 list 페이지로 전달
+		rttr.addAttribute("result","delOK");
+		// 4. 게시판 리스트로 이동(/board/list)
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	
+	
+	
 	
 }
 
