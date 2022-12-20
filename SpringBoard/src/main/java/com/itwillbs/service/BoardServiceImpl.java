@@ -17,7 +17,8 @@ public class BoardServiceImpl implements BoardService {
 
 	private static final Logger mylog = LoggerFactory.getLogger(BoardServiceImpl.class);
 	
-	@Autowired
+//	@Autowired
+	@Inject
 	private BoardDAO dao; 
 	
 	

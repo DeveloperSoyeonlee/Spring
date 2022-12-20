@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" -->
+<!--         "http://www.springframework.org/dtd/spring-beans-2.0.dtd">  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+>
+
+   <!-- 타겟 객체 생성 -->
+   <bean id="calcTarget" class="com.itwillbs.aop.Calculator" />
+   <!-- 어드바이스 객체 생성 -->
+   <bean id="logAdvice" class="com.itwillbs.aop.LoggingAdvice" />
+   
+   <!-- 타겟 + 어드바이스 = 어드바이저 -->
+   <bean id="proxyCalc" 
+        class="org.springframework.aop.framework.ProxyFactoryBean">
+      
+      <property name="target" ref="calcTarget" />
+      <property name="interceptorNames"> <!-- 누군가의 기능을 가로채는 기능 /String[] : 배열 형태임 -->
+         <list>
+            <value>logAdvice</value>
+         </list>
+      </property>
+   </bean>
+   
+   <context:component-scan base-package="com.itwillbs.aop" />
+</beans>      

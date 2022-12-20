@@ -30,7 +30,7 @@
 
 
 	<!-- 글번호(bno) 글정보 모두 조회 -->
-	<select id="getBoard" resultType="com.itwillbs.domain.BoardVO">
+	<select id="getBoard" resultType="BoardVO">
 		select * from tbl_board where bno = #{bno}
 	</select>
 	

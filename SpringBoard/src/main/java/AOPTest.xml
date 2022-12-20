@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+        
+<beans>
+	
+	<!-- 타겟 객체 생성 -->
+	<bean id="calcTarget" class="com.itwillbs.aop.Calculator"/>
+	
+	<!-- 어드바이스 객체 생성 -->
+	<bean id="logAdvice" class="com.itwillbs.aop.LoggingAdvice"/>
+	
+	<!-- 타겟 + 어드바이스 = 어드바이저-->
+	<bean id="proxyCalc" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="calcTarget"></property>
+		<property name="interceptorNames">
+			<list>
+				<value>logAdvice</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>
