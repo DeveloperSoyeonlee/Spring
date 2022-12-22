@@ -47,6 +47,41 @@
 		delete from tbl_board where bno=#{bno}
 	</delete>
 	
+	
+	<!-- 페이징처리 게시판목록 : 원하는 만큼 잘라서 가져다보여주는 -->
+	<select id="listPage" resultType="BoardVO">
+	 <![CDATA[
+		select * from tbl_board
+		where bno > 0 
+		order by bno desc, regdate desc
+		limit #{page},10
+		]]> 
+	</select>
+	
+	
+	
+	<!-- 페이징처리 게시판목록  -->
+	<select id="listPage2" resultType="BoardVO">
+	 <![CDATA[
+		select * from tbl_board
+		where bno > 0 
+		order by bno desc, regdate desc
+		limit #{pageStart},#{perPageNum}
+		]]> 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
 
 

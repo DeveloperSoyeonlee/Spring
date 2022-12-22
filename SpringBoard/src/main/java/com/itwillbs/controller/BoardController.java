@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.service.BoardService;
 
 @Controller
@@ -78,7 +80,7 @@ public class BoardController {
 	
 	
 	/**
-	 * 목록 부르기 list
+	 * 목록 부르기 list (페이징 처리X)
 	 */
 	//http://localhost:8080/board/list?result=createOK
 	//http://localhost:8080/board/list
@@ -103,6 +105,47 @@ public class BoardController {
 		
 		//4. 페이지 이동(/board/list.jsp)
 		// 이동할 필요 없다. 메서드 리턴타입이 void 기 때문에 자동으로 해당이름에 해당하는 jsp뷰를 찾게되어있다
+		
+	}
+	
+	
+	/**
+	 * 페이징 처리 후 list
+	 */
+	
+	//http://localhost:8080/board/listPage
+	//http://localhost:8080/board/listPage?page=2
+	//http://localhost:8080/board/listPage?perPageNum=30
+	//http://localhost:8080/board/listPage?page=2&perPageNum=20
+	@RequestMapping (value="/listPage", method=RequestMethod.GET)
+	public String listPageGET(Criteria cri, HttpSession session, Model model) throws Exception {
+		
+		//1. 전달받는 정보는 없음X
+//		mylog.debug(" 전달정보 : " + result);
+		
+		// 세션객체 - 글 조회수 체크 정보
+		session.setAttribute("updateCheck", true);
+		
+		// 페이징처리 객체 (직접생성 = 강한결합 -> 스프링에서는 No .스프링프레임워크에 맞춰서 바꿔야함)
+//		Criteria cri = new Criteria();
+		
+		//2. 서비스 -> DAO 게시판 리스트 가져오기
+		List<BoardVO> boardList = service.getListPage(cri);
+		
+		// 페이징처리 하단부 정보 준비 -> 뷰페이지로 전달
+		PageVO pvo = new PageVO();
+		pvo.setCri(cri);
+		pvo.setTotalCount(769);
+		
+		// model객체로 넘기기
+		model.addAttribute("pvo", pvo);
+		
+		
+		//3. 연결되어 있는 뷰페이지로 정보 전달 (Model 객체 생성)
+		model.addAttribute("boardList", boardList);
+		
+		//4. 페이지 이동(/board/list.jsp)
+		return "/board/list";
 		
 	}
 
@@ -218,7 +261,9 @@ public class BoardController {
 	
 	
 	
-	
+	/**
+	 * 
+	 */
 	
 	
 }

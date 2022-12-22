@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -90,6 +91,32 @@ public class BoardDAOImpl implements BoardDAO {
 	public void deleteBoard(Integer bno) throws Exception {
 		mylog.debug(" deleteBoard(BoardVO vo" );
 		sqlSession.delete(NAMESPACE+".deleteBoard",bno);
+	}
+
+
+	
+	@Override
+	public List<BoardVO> getListPage(Integer page) throws Exception {
+		
+		mylog.debug(" getListPage(Integer page) 페이징처리" );
+		// 페이지 정보 계산
+		if(page < 0) {
+			page = 1;
+		}
+		
+		// 디비에서 10개씩 조회
+		// 페이지 1 일때 시작번호 0 / 2 - 10 / 3 - 20 / 4 - 30 / 5 - 40
+		page = (page - 1) * 10;
+		
+		
+		return sqlSession.selectList(NAMESPACE+".listPage",page);
+	}
+
+
+	@Override
+	public List<BoardVO> getListPage(Criteria cri) throws Exception {
+		mylog.debug(" getListPage(Criteria cri) 페이징처리" );
+		return sqlSession.selectList(NAMESPACE+".listPage2", cri);
 	}
 
 

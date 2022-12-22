@@ -8,10 +8,12 @@
 <h1>/board/list.jsp</h1>
 
 <%-- 		${boardList } --%>
-${result }
-request : ${requestScope.result }
-session : ${sessionScope.result }
-param : ${param.result }
+<%-- ${result } --%>
+<%-- request : ${requestScope.result } --%>
+<%-- session : ${sessionScope.result } <!-- not working --> --%>
+<%-- param : ${param.result } --%>
+
+${pvo }
 
 <div class="box">
 	<div class="box-header with-border">
@@ -59,11 +61,24 @@ param : ${param.result }
 
 	<div class="box-footer clearfix">
 		<ul class="pagination pagination-sm no-margin pull-right">
-			<li><a href="#">«</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">»</a></li>
+			
+			<c:if test="${pvo.prev }">
+				<li><a href="/board/listPage=${pvo.startPage-1 }">«</a></li> <!-- 바로 전페이지로 보낼 것  -->
+			</c:if>
+			
+			<c:forEach var="idx" begin="${pvo.startPage }" end="${pvo.endPage }" step="1">
+					
+				<li 
+				
+					<c:out value="${idx ==pvo.cri.page? 'class=active' : '' }"/>
+				
+				><a href="/board/listPage?page=${idx}">${idx }</a></li>
+			</c:forEach>
+					
+			<c:if test="${pvo.next }">
+				<li><a href="/board/listPage=${pvo.endPage+1 }">»</a></li>
+			</c:if>
+			
 		</ul>
 	</div>
 </div>
