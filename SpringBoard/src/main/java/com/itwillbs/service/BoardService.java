@@ -36,6 +36,7 @@ public interface BoardService {
 	public List<BoardVO> getListPage(Criteria cri) throws Exception;
 	
 	
-	
+	// 글 전체 개수 (단순 정수형데이터 - 조회이므로 전달받거나 하는게 아님 so 인티저안써도된다)
+	public int totalCnt() throws Exception;
 	
 }

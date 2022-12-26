@@ -135,7 +135,9 @@ public class BoardController {
 		// 페이징처리 하단부 정보 준비 -> 뷰페이지로 전달
 		PageVO pvo = new PageVO();
 		pvo.setCri(cri);
-		pvo.setTotalCount(769);
+//		pvo.setTotalCount(769);
+		mylog.debug("totalCnt : "+service.totalCnt());
+		pvo.setTotalCount(service.totalCnt()); // 현재 작성되어있는 글전체 개수 가져오기
 		
 		// model객체로 넘기기
 		model.addAttribute("pvo", pvo);

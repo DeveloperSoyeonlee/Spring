@@ -121,6 +121,13 @@ public class BoardDAOImpl implements BoardDAO {
 
 
 	
+	@Override
+	public int totalCnt() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".countBoard");
+	}
+
+
+	
 
 
 	
