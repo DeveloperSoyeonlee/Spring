@@ -95,7 +95,7 @@ public class FileUploadController {
 		Iterator<String> fileNames // Iterator : Enumeration와 유사. getFileNames를 Iterator형태로 저장되면 반복문안에서 실행할 수 있는 형태로 만듦
 						= multi.getFileNames(); //getFileNames : getParameterNames 와 비슷한 역할.
 		while(fileNames.hasNext()) {
-			String fileName = fileNames.next(); //커서를 옮긴다
+			String fileName = fileNames.next(); //커서를 이동하면서 
 //			mylog.debug("fileName : "+ fileName);
 			// 전달받은 파일의 정보를 저장(데이터)
 			MultipartFile mFile = multi.getFile(fileName); // 파일의 내용 저장
@@ -105,7 +105,7 @@ public class FileUploadController {
 			
 			fileList.add(oFilenName);
 			
-			// 업로드 처리
+			// 업로드 처리 C:\\spring
 			File file = new File(FILE_PATE+"\\"+fileName); 
 			
 			if(mFile.getSize() != 0) { // 업로드된 파일정보가 있으면 
